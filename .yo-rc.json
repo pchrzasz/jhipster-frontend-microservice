@@ -1,0 +1,30 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.0.1",
+    "applicationType": "monolith",
+    "baseName": "jhipsterFrontend",
+    "clientFramework": "react",
+    "clientTheme": "solar",
+    "clientThemeVariant": "primary",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "authenticationType": "oauth2",
+    "cacheProvider": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "sql",
+    "prodDatabaseType": "sql",
+    "testFrameworks": ["protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en", "pl"],
+    "skipServer": true
+  }
+}
