@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+require('dotenv').config();
 const writeFilePlugin = require('write-file-webpack-plugin');
 const webpackMerge = require('webpack-merge');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -12,6 +13,7 @@ const utils = require('./utils.js');
 const commonConfig = require('./webpack.common.js');
 
 const ENV = 'development';
+const BACKEND_URL = process.env.BACKEND_URL;
 
 module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
   devtool: 'cheap-module-source-map', // https://reactjs.org/docs/cross-origin-errors.html
@@ -44,14 +46,14 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
       context: [
         '/'
       ],
-      target: `http${options.tls ? 's' : ''}://localhost:8080`,
+      target: `http${options.tls ? 's' : ''}://${BACKEND_URL}:8080`,
       secure: false,
       changeOrigin: options.tls
     },{
       context: [
         '/websocket'
       ],
-      target: 'ws://127.0.0.1:8080',
+      target: `ws://${BACKEND_URL}:8080`,
       ws: true
     }],
     watchOptions: {
