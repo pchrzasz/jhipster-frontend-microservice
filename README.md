@@ -54,38 +54,6 @@ spring:
             client-secret: web_app
 ```
 
-### Okta
-
-If you'd like to use Okta instead of Keycloak, you'll need to change a few things. First, you'll need to create a free developer account at <https://developer.okta.com/signup/>. After doing so, you'll get your own Okta domain, that has a name like `https://dev-123456.okta.com`.
-
-Modify `src/main/resources/application.yml` to use your Okta settings.
-
-```yaml
-spring:
-  ...
-  security:
-    oauth2:
-      client:
-        provider:
-          oidc:
-            issuer-uri: https://{yourOktaDomain}/oauth2/default
-        registration:
-          oidc:
-            client-id: {clientId}
-            client-secret: {clientSecret}
-security:
-```
-
-Create an OIDC App in Okta to get a `{clientId}` and `{clientSecret}`. To do this, log in to your Okta Developer account and navigate to **Applications** > **Add Application**. Click **Web** and click the **Next** button. Give the app a name you’ll remember, specify `http://localhost:8080` as a Base URI, and `http://localhost:8080/login/oauth2/code/oidc` as a Login Redirect URI. Click **Done**, then Edit and add `http://localhost:8080` as a Logout redirect URI. Copy and paste the client ID and secret into your `application.yml` file.
-
-> **TIP:** If you want to use the [Ionic Module for JHipster](https://www.npmjs.com/package/generator-jhipster-ionic), you'll need to add `http://localhost:8100` as a **Login redirect URI** as well.
-
-Create a `ROLE_ADMIN` and `ROLE_USER` group and add users into them. Modify e2e tests to use this account when running integration tests. You'll need to change credentials in `src/test/javascript/e2e/account/account.spec.ts` and `src/test/javascript/e2e/admin/administration.spec.ts`.
-
-Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the default one. Click the **Claims** tab and **Add Claim**. Name it "roles", and include it in the ID Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`.
-
-After making these changes, you should be good to go! If you have any issues, please post them to [Stack Overflow](https://stackoverflow.com/questions/tagged/jhipster). Make sure to tag your question with "jhipster" and "okta".
-
 ### Service workers
 
 Service workers are commented by default, to enable them please uncomment the following code.
@@ -121,20 +89,17 @@ For further instructions on how to develop with JHipster, have a look at [Using 
 
 ## Building for production
 
-### Packaging as jar
+## Docker
 
-To build the final jar and optimize the jhipsterFrontend application for production, run:
+To build docker image, run:
 
-This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
+    docker build -t jhipster-frontend-microservice .
 
-Then navigate to [http://localhost:](http://localhost:) in your browser.
+To run container, execute:
 
-Refer to [Using JHipster in production][] for more details.
+    docker run -p 9000:9000 -e BACKEND_URL="${MACHINE_IP}" jhipster-frontend-microservice:latest
 
-### Packaging as war
-
-To package your application as a war in order to deploy it to an application server, run:
+\${MACHINE_IP} is external ip where jhipster-backend-microservice is deployed.
 
 ## Testing
 
